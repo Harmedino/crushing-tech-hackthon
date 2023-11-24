@@ -408,7 +408,7 @@ progress[value]::-webkit-progress-value {
   border-radius: 10px;
   overflow: hidden;
   max-height: 10;
-  margin-bottom: 7px;
+  margin-bottom: 14px;
   transition: max-height ease-in-out;
   cursor: pointer;
 }
