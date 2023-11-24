@@ -434,6 +434,13 @@ progress[value]::-webkit-progress-value {
 .rotate {
   transition: transform 2s;
 }
+
+
+.loading ,
+.success  {
+  display: none;
+}
+
 .end-image{
   margin-top: 20px;
 }

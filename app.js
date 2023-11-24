@@ -8,6 +8,24 @@ const upDown = document.getElementById('up-down');
 const upArrow = document.querySelector('.up');
 const downArrow = document.querySelector('.down');
 const stepsContainer = document.getElementById('stepsContainer');
+const rotateDiv = document.querySelectorAll('.rotate');
+const loadingDiv = document.querySelectorAll('.loading');
+const successDiv = document.querySelectorAll('.success');
+
+rotateDiv.forEach((rotate,index )=> {
+  rotate.addEventListener('click', () => {
+    // Simulate loading state
+    rotate.style.display = 'none';
+    loadingDiv[index].style.display = 'block';
+  
+    // Simulate a delay (e.g., an API call)
+    setTimeout(() => {
+      // Simulate success state
+      loadingDiv[index].style.display = 'none';
+      successDiv[index].style.display = 'block';
+    }, 2000); // Adjust the delay time as needed
+  });
+})
 
 function toggleProfileDropdown() {
     if (alertBell.classList.contains("hidden")) {
