@@ -12,6 +12,10 @@ const rotateDiv = document.querySelectorAll(".rotate");
 const loadingDiv = document.querySelectorAll(".loading");
 const successDiv = document.querySelectorAll(".success");
 const dropdownItems = profileDropdown.querySelectorAll('[role="menuitem"]');
+let progressValue = 0;
+let completedCount = 0;
+const progressBar = document.getElementById('progressBar');
+const progressLabel = document.querySelector('.bar');
 
 function toggleProfileDropdown() {
   const isHidden = profileDropdown.classList.contains("hidden");
@@ -142,6 +146,13 @@ rotateDiv.forEach((rotate, index) => {
       loadingDiv[index].setAttribute("aria-hidden", "true");
       successDiv[index].setAttribute("aria-hidden", "false");
 
+       // Update progress
+       progressValue += 20;
+      progressBar.value = progressValue;
+      completedCount += 1;
+      progressLabel.textContent = `${completedCount} / 5 completed`;
+  
+
       if (index < loadingDiv.length) {
         toggleList(loadingDiv[index + 1].closest(".lists"));
       }
@@ -158,6 +169,13 @@ successDiv.forEach((element, index) => {
     rotateDiv[index].setAttribute("aria-hidden", "false");
     loadingDiv[index].setAttribute("aria-hidden", "false");
     successDiv[index].setAttribute("aria-hidden", "true");
+
+     // Update progress
+     progressValue -= 20;
+    progressBar.value = progressValue;
+        // Update completed count and progress label
+        completedCount -= 1;
+        progressLabel.textContent = `${completedCount} / 5 completed`;
 
     setTimeout(() => {
       loadingDiv[index].style.display = "none";

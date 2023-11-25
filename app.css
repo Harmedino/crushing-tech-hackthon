@@ -405,18 +405,30 @@ button:active {
   align-items: center;
 }
 progress {
-  width: 20%;
-  height: 20px;
+  max-width: 72px;
+height: 4px;
+border-radius: 28px ;
+
 }
 
-progress[value]::-webkit-progress-bar {
-  background-color: #1a1a1a;
+progress[value] {
+  width: 100%;
+  height: 10px;
+  background-color: #eee;
+  border-radius: 10px;
 }
 
 progress[value]::-webkit-progress-value {
-  background-color: #1a1a1a;
+  background-color: #1c181d;
   border-radius: 7px;
-  transition: width 0.6s ease-in;
+}
+
+progress[value]::-moz-progress-bar {
+  background-color: #1c181d;
+}
+
+progress[value]::-ms-fill {
+  background-color: #1c181d;
 }
 
 .up-down {
@@ -463,20 +475,23 @@ progress[value]::-webkit-progress-value {
 .checkbox{
   
   border-radius: 3px ;
-  border: 1px solid #616161;
-  weight: 32px;
+  
+  width: 32px;
   height: 32px;
   display: flex;
   align-items: center;
+  justify-content:center;
 }
 .checkbox:focus {
-  outline: 4px solid #005bd3 !important;
+  outline: 2px solid #005bd3 !important;
+  outline-offset: 1px;
 }
 
 .checkbox:hover .rotate circle{
   transition: transform 8s ease-in-out;
   stroke-dasharray: 0 0;
   fill: #616161;
+  border: 1px solid #616161;
 }
 
 .loading,
@@ -514,9 +529,7 @@ progress[value]::-webkit-progress-value {
   }
 }
 
-.end-image {
-  margin-top: 20px;
-}
+
 
 .hover-rotate:hover {
   cursor: pointer;
