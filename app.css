@@ -10,7 +10,7 @@ body {
 }
 
 .header {
-  height: 30px;
+  height: 40px;
   background: var(--grey-grey-300, #1a1a1a);
   display: flex;
   padding: 12px 16px;
@@ -31,12 +31,13 @@ body {
   gap: 6px;
   border-radius: 10px;
   background-color: #303030;
-  border: 0.5px solid white;
+  border: 0.5px solid #616161;
 }
 .searchBar:hover {
   border: 1px solid #e1e1e1;
 }
-.searchBar:focus {
+.searchBar:focus,
+.searchBar:active {
   border: 2px solid #ffffff;
 }
 
@@ -50,7 +51,7 @@ input {
 .searchBar input::placeholder {
   color: var(--grey-g-100, #b5b5b5);
   font-family: Inter;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 500;
 }
 
@@ -90,8 +91,13 @@ input {
 .notification:hover {
   background-color: #616161;
 }
-.profile .notification:focus {
+.notification:active,
+.notification:focus {
   background-color: #656266;
+}
+.notification:focus {
+  outline: 2px solid #005bd3;
+  outline-offset: 1px;
 }
 
 .profileName {
@@ -112,8 +118,13 @@ input {
   background-color: #616161;
 }
 
-.profile .profileName:focus {
+.profile .profileName:focus,
+.profileName:active {
   background-color: #656266;
+}
+.profileName:focus {
+  outline: 2px solid #005bd3;
+  outline-offset: 1px;
 }
 
 .profileName p {
@@ -315,6 +326,16 @@ a.focus:focus {
   display: flex;
   align-items: center;
 }
+.planButton button:hover {
+  background-color: #f7f7f7;
+}
+.planButton button:focus,
+button:active {
+  background-color: #f7f7f7;
+}
+.planButton button:focus {
+  outline: 2px solid #005bd3;
+}
 .plan button,
 .smallScreen {
   border-radius: 6px;
@@ -364,7 +385,7 @@ a.focus:focus {
   margin-bottom: 9px;
 }
 
-.import{
+.import {
   font-family: Inter;
   font-size: 15px;
   font-weight: 500;
@@ -372,8 +393,7 @@ a.focus:focus {
   letter-spacing: 0em;
   text-align: left;
   margin-left: 7px;
-  
-    }
+}
 .bar {
   font-size: 14px;
   margin-right: 10px;
@@ -400,16 +420,20 @@ progress[value]::-webkit-progress-value {
 }
 
 .up-down {
-  background-color: transparent;
+  background-color: transparent !important;
   height: 25px;
   border-radius: 3px;
   outline: none;
   border: none;
+  display: flex;
+  align-items: center;
 }
-.up-down:hover{
+.up-down:hover {
   background-color: #f1f1f1;
 }
-
+.up-down:focus {
+  outline: 2px solid #005bd3;
+}
 
 .lists {
   display: grid;
@@ -431,22 +455,66 @@ progress[value]::-webkit-progress-value {
   max-height: 2000px;
 }
 
-.list-head{
+.list-head {
   display: flex;
   align-items: center;
 }
 
-.rotate {
-  transition: transform 2s;
+.checkbox{
+  
+  border-radius: 3px ;
+  border: 1px solid #616161;
+  weight: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
+.checkbox:focus {
+  outline: 4px solid #005bd3 !important;
 }
 
+.checkbox:hover .rotate circle{
+  transition: transform 8s ease-in-out;
+  stroke-dasharray: 0 0;
+  fill: #616161;
+}
 
-.loading ,
-.success  {
+.loading,
+.success {
   display: none;
 }
 
-.end-image{
+.success{
+  animation-duration: 300ms;
+  animation-name: zooming;
+  animation-timing-function: linear;
+}
+.loading{
+  animation-duration: 1000ms;
+  animation-name: spin;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+  from { 
+    transform: rotate(0deg);
+  }to{
+    transform: rotate(360deg);
+  }
+}
+@keyframes zooming{
+  from{
+    transform: scale(0) rotate(270deg);
+    opacity:0;
+  }
+  to{
+    transform:scale(1) rotate(360deg);
+    opacity: 1;
+  }
+}
+
+.end-image {
   margin-top: 20px;
 }
 
@@ -454,7 +522,7 @@ progress[value]::-webkit-progress-value {
   cursor: pointer;
 }
 
-.setup-head{
+.setup-head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -463,7 +531,7 @@ progress[value]::-webkit-progress-value {
   margin-top: 20px;
   padding: 4px 0 4px 0;
 }
-.setup-head h5{
+.setup-head h5 {
   font-weight: 600;
 }
 
@@ -517,8 +585,8 @@ img {
   .plan {
     width: 60%;
   }
-  .setup{
-    width:60%
+  .setup {
+    width: 60%;
   }
 }
 
@@ -540,7 +608,6 @@ img {
   .profile .notification {
     background-color: #1a1a1a;
   }
- 
 
   .profileName p {
     display: none;
@@ -563,6 +630,7 @@ img {
   .smallScreen {
     margin-top: 10px;
     display: inherit !important;
+    box-sizing: 0px 0px 1px 0px #323232;
   }
 
   .profile .profileName {
