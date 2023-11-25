@@ -431,6 +431,11 @@ progress[value]::-webkit-progress-value {
   max-height: 2000px;
 }
 
+.list-head{
+  display: flex;
+  align-items: center;
+}
+
 .rotate {
   transition: transform 2s;
 }
@@ -465,7 +470,7 @@ progress[value]::-webkit-progress-value {
 .customize {
   width: 90%;
 }
-.customize h5 {
+.list-head h5 {
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 10px;

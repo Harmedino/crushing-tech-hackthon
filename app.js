@@ -11,47 +11,56 @@ const stepsContainer = document.getElementById('stepsContainer');
 const rotateDiv = document.querySelectorAll('.rotate');
 const loadingDiv = document.querySelectorAll('.loading');
 const successDiv = document.querySelectorAll('.success');
+const dropdownItems = profileDropdown.querySelectorAll('[role="menuitem"]');
 
-rotateDiv.forEach((rotate,index )=> {
-  rotate.addEventListener('click', () => {
-    // Simulate loading state
-    rotate.style.display = 'none';
-    loadingDiv[index].style.display = 'block';
-  
-    // Simulate a delay (e.g., an API call)
-    setTimeout(() => {
-      // Simulate success state
-      loadingDiv[index].style.display = 'none';
-      successDiv[index].style.display = 'block';
-    }, 2000); // Adjust the delay time as needed
-  });
-})
+
+
 
 function toggleProfileDropdown() {
-    if (alertBell.classList.contains("hidden")) {
-      profileDropdown.classList.toggle("hidden");
-    } else {
-      alertBell.classList.add("hidden");
-      profileDropdown.classList.toggle("hidden");
-    }
-  }
-  
+  const isHidden = alertBell.classList.contains("hidden");
+  const expanded = notificationIcon.getAttribute('aria-expanded') === 'true';
+
+  // Toggle the visibility of the dropdown
+  profileDropdown.classList.toggle("hidden");
+
+  // Update aria-expanded attribute
+  notificationIcon.setAttribute("aria-expanded", !expanded);
+
+  // Focus on the button to provide better navigation for screen reader users
+  notificationIcon.focus();
+}
   profileName.addEventListener("click", toggleProfileDropdown);
   
+  
+
+
 
   function toggleNotificationIcon() {
-    if (profileDropdown.classList.contains('hidden')) {
-        alertBell.classList.toggle("hidden");
+    const isDropdownHidden = profileDropdown.classList.contains('hidden');
+    const isBellHidden = alertBell.classList.contains('hidden');
+  
+    if (isDropdownHidden) {
+      alertBell.classList.toggle('hidden');
     } else {
-        profileDropdown.classList.add('hidden')
-        alertBell.classList.toggle('hidden')
+      profileDropdown.classList.add('hidden');
+      alertBell.classList.toggle('hidden');
     }
+  
+    // Update aria-expanded attribute for the notification icon
+    notificationIcon.setAttribute('aria-expanded', isDropdownHidden ? 'false' : 'true');
+  }
+  
+
+dropdownItems.forEach((element, index) => {
+  element.addEventListener('keyup', ()=> {
+    navigateMenuItem()
+  })
+})
+
+function navigateMenuItem(event) {
+  console.log(event);
 }
 
-function announceAlert(message) {
-  const liveRegion = document.getElementById('alert');
-  liveRegion.innerText = message;
-}
 
 // Call this function when you want to announce an alert
 // announceAlert('New alert message here');
@@ -73,10 +82,12 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && !profileDropdown.classList.contains("hidden")) {
     profileDropdown.classList.add("hidden");
   }
-  if (focusedElement.classList.contains("notification")) {
+  if (focusedElement.classList.contains("profile")) {
     if (event.key === "Enter") {
         toggleNotificationIcon()
     }
+  } if (event.key === "Escape" && !alertBell.classList.contains("hidden")) {
+    alertBell.classList.add('hidden')
   }
 });
 
@@ -103,23 +114,7 @@ upDown.addEventListener('click', () => {
 });
 
 
-function rotateAndReplace(svgElement) {
-  // Rotate the SVG
-  svgElement.classList.toggle('rotate');
 
-  // Replace with a different SVG after 2 seconds
-  
-    svgElement.innerHTML = `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="10" fill="#4A4A4A"></circle>
-    <path
-      d="M17.2738 8.52629C17.6643 8.91682 17.6643 9.54998 17.2738 9.94051L11.4405 15.7738C11.05 16.1644 10.4168 16.1644 10.0263 15.7738L7.3596 13.1072C6.96908 12.7166 6.96908 12.0835 7.3596 11.693C7.75013 11.3024 8.38329 11.3024 8.77382 11.693L10.7334 13.6525L15.8596 8.52629C16.2501 8.13577 16.8833 8.13577 17.2738 8.52629Z"
-      fill="#fff"
-    ></path>
-  </svg>
-    `;
- 
-}
 function toggleList(listElement) {
   const lists = document.querySelectorAll('.lists');
   lists.forEach((list) => {
@@ -129,18 +124,34 @@ function toggleList(listElement) {
     listElement.classList.add('active');
   });
 
-  // if (listElement.classList.contains('active')) {
-  //   return
-  // }
-
-  // Toggle the clicked list
- 
-
-  // Rotate the arrow
-  // const rotateElement = listElement.querySelector('.rotate');
-  // rotateElement.classList.toggle('rotate');
-
-  // Close other lists
  
 }
+rotateDiv.forEach((rotate,index )=> {
+  rotate.addEventListener('click', () => {
+    // Simulate loading state
+    
+    rotate.style.display = 'none';
+    loadingDiv[index].style.display = 'block';
+  
+    
+    setTimeout(() => {
+      // Simulate success state
+      loadingDiv[index].style.display = 'none';
+      successDiv[index].style.display = 'block';
+      if (index < loadingDiv.length ) {
+        
+        toggleList(loadingDiv[index+1].closest('.lists'))
+      }
+    }, 1000); 
+  });
+})
+
+successDiv.forEach((element, index) => {
+  element.addEventListener('click', () => {
+    element.style.display = 'none'
+
+    rotateDiv[index].style.display = 'block'
+    // toggleList(element.closest('.lists'))
+  })
+})
 
