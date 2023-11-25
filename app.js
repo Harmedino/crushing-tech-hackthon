@@ -28,10 +28,9 @@ function toggleProfileDropdown() {
 
   profileDropdown.classList.toggle("hidden");
 
+
   profileName.setAttribute("aria-expanded", isHidden ? "true" : "false");
 
-  // Focus on the button to provide better navigation for screen reader users
-  profileDropdown.focus();
 }
 profileName.addEventListener("click", toggleProfileDropdown);
 
@@ -55,17 +54,22 @@ function toggleNotificationIcon() {
   );
 
   notificationIcon.focus();
+
+   
+  const isExpanded = alertBell.getAttribute("aria-expanded") === "true";
+  
+  if (isExpanded) {
+    alertBell.setAttribute("aria-expanded", "false");
+    alertBell.setAttribute("aria-live", "off");
+    alertBell.setAttribute("aria-label", "Notification closed");
+  } else {
+    alertBell.setAttribute("aria-expanded", "true");
+    alertBell.setAttribute("aria-live", "assertive");
+    alertBell.setAttribute("aria-label", "Notification open");
+  }
 }
 
-dropdownItems.forEach((element, index) => {
-  element.addEventListener("keyup", () => {
-    navigateMenuItem();
-  });
-});
 
-function navigateMenuItem(event) {
-  console.log(event);
-}
 
 // Call this function when you want to announce an alert
 // announceAlert('New alert message here');
@@ -78,11 +82,12 @@ document.addEventListener("keydown", (event) => {
   if (focusedElement.classList.contains("profileName")) {
     if (event.key === "Enter") {
       toggleProfileDropdown();
+      if (focusedElement.classList.contains("cancel")) {
+        trialPlan.classList.add("hidden");
+      }
     }
   }
-  if (focusedElement.classList.contains("cancel")) {
-    trialPlan.classList.add("hidden");
-  }
+  
   if (event.key === "Escape" && !profileDropdown.classList.contains("hidden")) {
     profileDropdown.classList.add("hidden");
   }
