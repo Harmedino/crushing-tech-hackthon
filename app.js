@@ -160,6 +160,7 @@ rotateDiv.forEach((rotate, index) => {
 
       if (index < loadingDiv.length) {
         toggleList(loadingDiv[index + 1].closest(".lists"));
+        loadingDiv[index + 1].closest('.checkbox').focus()
       }
     }, 2000);
   });
