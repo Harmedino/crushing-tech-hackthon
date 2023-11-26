@@ -136,12 +136,15 @@ function toggleList(listElement) {
         // Open the selected img-box
         currentImgBox.classList.remove("hidden");
       } else {
-        // If the selected img-box is already open, close it
-        currentImgBox.classList.add("hidden");
+        // If the selected img-box is already open, do nothing
       }
+    } else {
+      // Close other lists
+      imgBox[index].classList.add("hidden");
     }
   });
 }
+
 
 
 
@@ -175,7 +178,7 @@ rotateDiv.forEach((rotate, index) => {
   
 
       if (index < loadingDiv.length) {
-        // toggleList(loadingDiv[index + 1].closest(".lists"));
+        toggleList(loadingDiv[index + 1].closest(".list-head"));
         loadingDiv[index + 1].closest('.checkbox').focus()
       }
     }, 2000);
