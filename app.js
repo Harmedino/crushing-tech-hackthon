@@ -105,6 +105,7 @@ trialCallout.addEventListener("click", () => {
   trialPlan.classList.add("hidden");
 });
 
+
 upDown.addEventListener("click", () => {
   upArrow.classList.toggle("hidden");
   downArrow.classList.toggle("hidden");
@@ -115,7 +116,10 @@ upDown.addEventListener("click", () => {
   stepsContainer.classList.toggle("hidden", !expanded);
 
   // Toggle aria-expanded attribute
-  upDown.setAttribute("aria-expanded", !expanded);
+  upDown.setAttribute("aria-expanded", String(!expanded));
+
+  // Toggle aria-hidden attribute
+  stepsContainer.setAttribute("aria-hidden", String(!expanded));
 
   // Focus on the button to provide better navigation for screen reader users
   upDown.focus();
