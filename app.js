@@ -123,13 +123,29 @@ upDown.addEventListener("click", () => {
 
 function toggleList(listElement) {
   const lists = document.querySelectorAll(".lists");
-  lists.forEach((list) => {
-    if (list !== listElement && list.classList.contains("active")) {
-      list.classList.remove("active");
+  const imgBox = document.querySelectorAll(".img-box");
+
+  lists.forEach((list, index) => {
+    const currentImgBox = imgBox[index];
+
+    if (list === listElement.closest('.lists')) {
+      if (currentImgBox.classList.contains("hidden")) {
+        // Close all other img-box elements
+        imgBox.forEach(box => box.classList.add("hidden"));
+
+        // Open the selected img-box
+        currentImgBox.classList.remove("hidden");
+      } else {
+        // If the selected img-box is already open, close it
+        currentImgBox.classList.add("hidden");
+      }
     }
-    listElement.classList.add("active");
   });
 }
+
+
+
+
 rotateDiv.forEach((rotate, index) => {
   rotate.addEventListener("click", () => {
     // Simulate loading state
@@ -159,7 +175,7 @@ rotateDiv.forEach((rotate, index) => {
   
 
       if (index < loadingDiv.length) {
-        toggleList(loadingDiv[index + 1].closest(".lists"));
+        // toggleList(loadingDiv[index + 1].closest(".lists"));
         loadingDiv[index + 1].closest('.checkbox').focus()
       }
     }, 2000);
