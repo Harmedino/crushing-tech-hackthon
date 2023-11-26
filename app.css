@@ -90,6 +90,7 @@ input {
 
 .notification:hover {
   background-color: #616161;
+  cursor: pointer;
 }
 .notification:active,
 .notification:focus {
@@ -169,35 +170,44 @@ input {
 
 .prof {
   justify-content: space-between;
-  border-radius: 6px;
+  border-radius: 8px;
   background-color: #f1f1f1;
+  padding: 4px 12px 4px 8px;
 }
 .profile-profile {
   display: flex;
   align-items: center;
+  gap: 8px;
 }
 .prof span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 5px 5px;
-  border-radius: 10px;
-  background-color: #36fba1;
-  color: #fff;
-  font-size: 20px;
-  margin-right: 8px;
-  font-family: Inter;
+  color: rgba(0, 0, 0, 0.40);
+text-align: center;
+font-family: Inter;
+font-size: 12.5px;
+font-style: normal;
+font-weight: 500;
+line-height: 140%; 
+display: flex;
+height: 28px;
+width: 28px;
+padding: 9.625px 5.875px 10.375px 6.125px;
+justify-content: center;
+align-items: center;
+border-radius: 5.25px;
+background: #36FBA1;
 }
 .prof p {
+  
   font-family: Inter;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 600;
   line-height: 18px;
   letter-spacing: 0em;
   text-align: left;
+  color: #303030;
 }
 .prof .profile-svg {
-  align-self: flex-end;
+  align-self: center;
 }
 
 .icon-text-container {
@@ -220,6 +230,7 @@ input {
   text-align: left;
   border-radius: 6px;
   padding: 8px;
+  color: #303030;
 }
 
 .focus {
@@ -349,14 +360,15 @@ a.focus:focus {
   background-color: #fff;
   box-shadow: 0px 0px 0px 3px;
 }
-.plan button,
-.smallScreen {
+.plan button{
   border-radius: 6px;
   padding: 6px 12px;
   border-radius: 6px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   background: var(--White, #fff);
   box-shadow: 0px -1px 0px 0px #b5b5b5 inset;
+}
+.plan button a{
   font-family: Inter;
   color: #323232;
   font-family: Inter;
@@ -364,9 +376,7 @@ a.focus:focus {
   font-style: normal;
   font-weight: 600;
 }
-.smallScreen {
-  display: none;
-}
+
 .plan span {
   margin-left: 4px;
 }
@@ -415,7 +425,7 @@ a.focus:focus {
   margin-left: 7px;
 }
 .bar {
-  font-size: 14px;
+  font-size: 12px;
   margin-right: 10px;
   color: #303030;
   font-family: Inter;
@@ -423,31 +433,6 @@ a.focus:focus {
 .prog {
   display: flex;
   align-items: center;
-}
-progress {
-  max-width: 72px;
-  height: 4px;
-  border-radius: 28px;
-}
-
-progress[value] {
-  width: 100%;
-  height: 10px;
-  background-color: #eee;
-  border-radius: 10px;
-}
-
-progress[value]::-webkit-progress-value {
-  background-color: #1c181d;
-  border-radius: 7px;
-}
-
-progress[value]::-moz-progress-bar {
-  background-color: #1c181d;
-}
-
-progress[value]::-ms-fill {
-  background-color: #1c181d;
 }
 
 .up-down {
@@ -570,16 +555,29 @@ progress[value]::-ms-fill {
 }
 .setup-head h5 {
   font-weight: 600;
+  color: #303030;
+  font-family: Inter;
+font-size: 14px;
+font-style: normal;
+}
+
+.setup-head p {
+  font-family: Inter;
+font-size: 13px;
+font-style: normal;
+font-weight: 400;
+color: #303030;
 }
 
 .customize {
   width: 90%;
 }
 .list-head h5 {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   margin-bottom: 10px;
   font-family: Inter;
+  color: #303030;
 }
 
 .customize p {
@@ -587,6 +585,7 @@ progress[value]::-ms-fill {
   font-weight: 500;
   line-height: 18px;
   font-family: Inter;
+  color: #616161;
 }
 .customize p a {
   color: #005bd3;

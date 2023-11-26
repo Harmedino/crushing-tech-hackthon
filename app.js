@@ -152,8 +152,8 @@ rotateDiv.forEach((rotate, index) => {
       successDiv[index].setAttribute("aria-hidden", "false");
 
        // Update progress
-       progressValue += 20;
-      progressBar.value = progressValue;
+      progressValue += 14.4;
+      progressBar.setAttribute('width', progressValue);
       completedCount += 1;
       progressLabel.textContent = `${completedCount} / 5 completed`;
   
