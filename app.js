@@ -16,6 +16,8 @@ let progressValue = 0;
 let completedCount = 0;
 const progressBar = document.getElementById('progressBar');
 const progressLabel = document.querySelector('.bar');
+const checkbox = document.querySelectorAll('.checkbox')
+const checkboxStatus = document.querySelectorAll('.checkbox-status')
 
 function toggleProfileDropdown() {
   const isHidden = profileDropdown.classList.contains("hidden");
@@ -98,6 +100,11 @@ document.addEventListener("keydown", (event) => {
   }
   if (event.key === "Escape" && !alertBell.classList.contains("hidden")) {
     alertBell.classList.add("hidden");
+  } if (focusedElement.classList.contains('list-head')) {
+    if (event.key === 'Enter') {
+      const listHead = focusedElement.closest('.list-head');
+      toggleList(listHead)
+    }
   }
 });
 
@@ -106,7 +113,8 @@ trialCallout.addEventListener("click", () => {
 });
 
 
-upDown.addEventListener("click", () => {
+
+function toggleUpDown() {
   upArrow.classList.toggle("hidden");
   downArrow.classList.toggle("hidden");
 
@@ -123,7 +131,16 @@ upDown.addEventListener("click", () => {
 
   // Focus on the button to provide better navigation for screen reader users
   upDown.focus();
+}
+
+upDown.addEventListener("click", toggleUpDown);
+upDown.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    toggleUpDown();
+  }
 });
+
+
 
 function toggleList(listElement) {
   const lists = document.querySelectorAll(".lists");
@@ -153,62 +170,103 @@ function toggleList(listElement) {
 
 
 
+// Function to handle the logic inside the click event
+function handleRotateClick(index) {
+
+  // Simulate loading state
+  rotateDiv[index].setAttribute("aria-checked", "false");
+  rotateDiv[index].setAttribute("aria-label", "Item not marked");
+
+  rotateDiv[index].style.display = "none";
+  loadingDiv[index].style.display = "block";
+  loadingDiv[index].setAttribute("aria-hidden", "false");
+  successDiv[index].setAttribute("aria-hidden", "true");
+  checkboxStatus[index].ariaLabel = 'Loading please wait'
+  setTimeout(() => {
+    
+    // Simulate success state
+    loadingDiv[index].style.display = "none";
+    successDiv[index].style.display = "block";
+    rotateDiv[index].setAttribute("aria-checked", "true");
+    rotateDiv[index].setAttribute("aria-label", "Item marked as done");
+    rotateDiv[index].setAttribute("aria-hidden", "true");
+    loadingDiv[index].setAttribute("aria-hidden", "true");
+    successDiv[index].setAttribute("aria-hidden", "false");
+
+    // Update progress
+    progressValue += 20; // Adjust this value based on your progress logic
+    progressBar.setAttribute('width', progressValue);
+    progressBar.setAttribute("aria-valuenow", progressValue);
+    progressBar.setAttribute("aria-valuetext", `${progressValue}%`);
+    progressBar.setAttribute("aria-labelledby", "completionStatus");
+
+    completedCount += 1;
+    progressLabel.textContent = `${completedCount} / 5 completed`;
+
+    if (index < loadingDiv.length) {
+      toggleList(loadingDiv[index + 1].closest(".list-head"));
+      loadingDiv[index + 1].closest('.checkbox').focus();
+    }
+    checkboxStatus[index].ariaLabel = 'successfully marked '
+  }, 2000);
+}
+
 rotateDiv.forEach((rotate, index) => {
   rotate.addEventListener("click", () => {
-    // Simulate loading state
-    rotate.setAttribute("aria-checked", "false");
-    rotate.setAttribute("aria-label", "Item not marked");
+    
+    checkbox[index].ariaLabel = checkbox[index].ariaLabel.replace('mark', 'unmark')
+    
+    handleRotateClick(index);
+  });
 
-    rotate.style.display = "none";
-    loadingDiv[index].style.display = "block";
-    loadingDiv[index].setAttribute("aria-hidden", "false");
-    successDiv[index].setAttribute("aria-hidden", "true");
-
-    setTimeout(() => {
-      // Simulate success state
-      loadingDiv[index].style.display = "none";
-      successDiv[index].style.display = "block";
-      rotate.setAttribute("aria-checked", "true");
-      rotate.setAttribute("aria-label", "Item marked as done");
-      rotate.setAttribute("aria-hidden", "true");
-      loadingDiv[index].setAttribute("aria-hidden", "true");
-      successDiv[index].setAttribute("aria-hidden", "false");
-
-       // Update progress
-      progressValue += 14.4;
-      progressBar.setAttribute('width', progressValue);
-      completedCount += 1;
-      progressLabel.textContent = `${completedCount} / 5 completed`;
-  
-
-      if (index < loadingDiv.length) {
-        toggleList(loadingDiv[index + 1].closest(".list-head"));
-        loadingDiv[index + 1].closest('.checkbox').focus()
-      }
-    }, 2000);
+  rotate.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      handleRotateClick(index);
+    }
   });
 });
 
 successDiv.forEach((element, index) => {
   element.addEventListener("click", () => {
-    element.style.display = "none";
-    loadingDiv[index].style.display = "inherit";
-    rotateDiv[index].setAttribute("aria-checked", "false");
-    rotateDiv[index].setAttribute("aria-label", "Item not marked");
-    rotateDiv[index].setAttribute("aria-hidden", "false");
-    loadingDiv[index].setAttribute("aria-hidden", "false");
-    successDiv[index].setAttribute("aria-hidden", "true");
+    handleSuccessClick(index);
+    checkbox[index].ariaLabel = checkbox[index].ariaLabel.replace('unmark','mark')
+    handleRotateClick(index);
+  });
 
-     // Update progress
-     progressValue -= 20;
-    progressBar.value = progressValue;
-        // Update completed count and progress label
-        completedCount -= 1;
-        progressLabel.textContent = `${completedCount} / 5 completed`;
-
-    setTimeout(() => {
-      loadingDiv[index].style.display = "none";
-      rotateDiv[index].style.display = "inherit";
-    }, 2000);
+  element.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      handleSuccessClick(index);
+    }
   });
 });
+
+function handleSuccessClick(index) {
+  element.style.display = "none";
+  loadingDiv[index].style.display = "inherit";
+  rotateDiv[index].setAttribute("aria-checked", "false");
+  rotateDiv[index].setAttribute("aria-label", "Item not marked");
+  rotateDiv[index].setAttribute("aria-hidden", "false");
+  loadingDiv[index].setAttribute("aria-hidden", "false");
+  successDiv[index].setAttribute("aria-hidden", "true");
+
+  
+  
+  checkboxStatus[index].ariaLabel = 'Loading please wait'
+  setTimeout(() => {
+    // Update progress
+    progressValue -= 20; // Adjust this value based on your progress logic
+  progressBar.setAttribute('width', progressValue);
+  progressBar.setAttribute("aria-valuenow", progressValue);
+  progressBar.setAttribute("aria-valuetext", `${progressValue}%`);
+  progressBar.setAttribute("aria-labelledby", "completionStatus");
+
+  // Update completed count and progress label
+  completedCount -= 1;
+  progressLabel.textContent = `${completedCount} / 5 completed`;
+    loadingDiv[index].style.display = "none";
+    rotateDiv[index].style.display = "inherit";
+    checkboxStatus[index].ariaLabel = 'successfully unmark'
+  }, 2000);
+}
+
+
